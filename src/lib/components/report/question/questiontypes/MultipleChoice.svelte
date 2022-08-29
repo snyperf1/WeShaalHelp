@@ -1,0 +1,21 @@
+<script>
+	import McqBox from '$lib/components/report/question/questiontypes/McqBox.svelte';
+
+	export let questionContent;
+	export let options;
+	let selected = '';
+
+	function handleClick(event) {
+		selected = event.detail.text;
+	}
+	// https://svelte.dev/tutorial/classes
+</script>
+
+<h2 class="mt-16 font-semibold text-3xl text-white flex justify-center text-center">
+	{questionContent}
+</h2>
+<div class="grid grid-rows-2 gap-x-10 gap-y-2 grid-cols-2 mt-10 font-medium">
+	{#each options as content, index}
+		<McqBox {content} {index} on:userselect={handleClick} />
+	{/each}
+</div>
