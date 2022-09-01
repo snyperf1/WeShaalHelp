@@ -1,8 +1,14 @@
 <script>
   import Checkbox from "$lib/components/report/question/questiontypes/multiselect/Checkbox.svelte";
-  export let options1;
-  export let options2;
+
+  export let options;
   export let questionContent;
+  let selected = [false, false, false, false, false, false, false, false];
+  function changeSelected(e) {
+    let index = e.detail.id;
+    selected[index] = !selected[index];
+    console.log(selected);
+  }
 </script>
 
 <h2
@@ -11,15 +17,9 @@
   {questionContent}
 </h2>
 <div class="flex flex-row gap-20 justify-center text-center">
-  <div class="flex flex-col gap-10 text-white">
-    {#each options1 as option}
-      <Checkbox {option} />
-    {/each}
-  </div>
-
-  <div class="flex flex-col gap-10 text-white">
-    {#each options2 as option}
-      <Checkbox {option} />
+  <div class="grid grid-rows-4 grid-cols-2 gap-y-10 gap-x-20 text-white">
+    {#each options as option, id}
+      <Checkbox {option} {id} on:selected={changeSelected} />
     {/each}
   </div>
 </div>

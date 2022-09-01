@@ -2,15 +2,22 @@
   import { createEventDispatcher } from "svelte";
   const dispatch = createEventDispatcher();
 
-  export let option;
+  export let option: string;
+  export let id: number;
   const green: string = "#4ADE80";
   let isclicked: Boolean = false;
   let fillcolour = "#1e293b";
   $: {
     if (isclicked) {
       fillcolour = green;
+      dispatch("selected", {
+        id: id,
+      });
     } else {
       fillcolour = "#1e293b";
+      dispatch("selected", {
+        id: id,
+      });
     }
   }
 </script>
@@ -48,7 +55,7 @@
   </div>
 
   <p
-    class="ml-5 text-base transition-all"
+    class="ml-5 text-base transition-all pr-10"
     class:font-bold={isclicked}
     class:text-green-400={isclicked}
     class:text-lg={isclicked}

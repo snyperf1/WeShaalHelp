@@ -17,13 +17,11 @@
     "I need academic help",
   ];
   // Multiselect portion
-  export let options1 = [
+  export let optionsMultiSelect = [
     "Projector does not stay down",
     "Projector not powering on",
     "Cannot connect mac to projector",
     "Control panel not working",
-  ];
-  export let options2 = [
     "Projector screen glitching",
     "Speakers have no sound",
     "Speakers are glitching",
@@ -34,7 +32,7 @@
   {#if questionType == "multipleChoice"}
     <MultipleChoice options={optionsMultipleChoice} {questionContent} />
   {:else if questionType == "checkbox"}
-    <Multiselect {options1} {options2} {questionContent} />
+    <Multiselect options={optionsMultiSelect} {questionContent} />
   {/if}
   <div class="flex justify-between mt-10 ml-10">
     <BackButton />
