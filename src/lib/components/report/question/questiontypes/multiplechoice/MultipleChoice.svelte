@@ -1,5 +1,5 @@
 <script>
-  import McqBox from "$lib/components/report/question/questiontypes/McqBox.svelte";
+  import McqBox from "$lib/components/report/question/questiontypes/multiplechoice/McqBox.svelte";
 
   export let questionContent;
   export let options;
