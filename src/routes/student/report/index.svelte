@@ -30,6 +30,6 @@
     <Progress progressValue="0" />
   </div>
   <div class="pr-20">
-    <Question {currentQuestion} {options} />
+    <Question {currentQuestion} optionsMultipleChoice={options} />
   </div>
 </main>

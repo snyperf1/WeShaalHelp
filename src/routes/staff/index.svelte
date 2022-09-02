@@ -1,4 +1,13 @@
-<main class="pt-20">
+<script context="module">
+  export async function load() {
+    return {
+      status: 301,
+      redirect: "/staff/dashboard",
+    };
+  }
+</script>
+
+<!-- <main class="pt-20">
 	<p class="ml-72 text-white">
 		Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dignissimos porro officia adipisci
 		impedit deserunt quo! Nulla provident consectetur, sunt ullam accusamus id animi qui? Inventore
@@ -13,4 +22,4 @@
 		neque, excepturi quisquam earum eveniet repellendus corrupti labore nesciunt atque blanditiis
 		expedita aliquid eius veritatis est eligendi quo.
 	</p>
-</main>
+</main> -->
