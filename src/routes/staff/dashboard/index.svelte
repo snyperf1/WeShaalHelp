@@ -1,49 +1,64 @@
 <script>
+  import BigNumbers from "$lib/components/statistics/BigNumbers.svelte";
   import Card from "$lib/components/statistics/Card.svelte";
   import Pie from "$lib/components/statistics/Pie.svelte";
+  import SmallHeader from "$lib/components/statistics/SmallHeader.svelte";
+  import Chart from "svelte-frappe-charts";
+  const pushedBackAppliances = [20, 10, 5, 4, 3, 2];
+  const pushedBackAppliancesLabelsRotated = [
+    [10, 0, 1, 2, 1, 1],
+    [5, 8, 3, 0, 1, 1],
+    [2, 2, 1, 2, 1, 0],
+  ];
+  const datasetNames = ["Projectors", "Speakers", "Others"];
+  function rotateMatrix(matrix) {
+    matrix = matrix[0].map((_, index) => matrix.map((row) => row[index]));
+    for (let i = 0; i < matrix.length; i++) {
+      for (let j = 0; j < matrix[i].length; j++) {
+        const temp = matrix[i][j];
+        matrix[i][j] = `${datasetNames[j]}: ${temp}`;
+      }
+    }
+    return matrix;
+  }
+  const pushedBackAppliancesLabels = rotateMatrix(
+    pushedBackAppliancesLabelsRotated
+  );
+  const pushedBackAppliancesData = {
+    labels: pushedBackAppliances,
+    datasets: [
+      {
+        name: datasetNames[0],
+        values: pushedBackAppliancesLabelsRotated[0],
+      },
+      {
+        name: datasetNames[1],
+        values: pushedBackAppliancesLabelsRotated[1],
+      },
+      {
+        name: datasetNames[2],
+        values: pushedBackAppliancesLabelsRotated[2],
+      },
+    ],
+  };
+  const brokenAppliancesLabels = [
+    "Speakers",
+    "Projectors",
+    "Projector screens",
+    "Wifi Routers",
+    "Door locks",
+    "Others",
+  ];
+  const brokenAppliancesValues = [4, 2, 5, 0, 20, 0];
+  const brokenAppliancesData = {
+    labels: brokenAppliancesLabels,
+    datasets: [
+      {
+        values: brokenAppliancesValues,
+      },
+    ],
+  };
 
-  //   import { onMount } from "svelte";
-  //   import Chart from "chart.js/auto/auto.js";
-
-  //   let ctx;
-  //   onMount(async () => {
-  //     const myChart = new Chart(ctx, {
-  //       type: "bar",
-  //       data: {
-  //         labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-  //         datasets: [
-  //           {
-  //             label: "# of Votes",
-  //             data: [12, 19, 3, 5, 2, 3],
-  //             backgroundColor: [
-  //               "rgba(255, 99, 132, 0.2)",
-  //               "rgba(54, 162, 235, 0.2)",
-  //               "rgba(255, 206, 86, 0.2)",
-  //               "rgba(75, 192, 192, 0.2)",
-  //               "rgba(153, 102, 255, 0.2)",
-  //               "rgba(255, 159, 64, 0.2)",
-  //             ],
-  //             borderColor: [
-  //               "rgba(255, 99, 132, 1)",
-  //               "rgba(54, 162, 235, 1)",
-  //               "rgba(255, 206, 86, 1)",
-  //               "rgba(75, 192, 192, 1)",
-  //               "rgba(153, 102, 255, 1)",
-  //               "rgba(255, 159, 64, 1)",
-  //             ],
-  //             borderWidth: 1,
-  //           },
-  //         ],
-  //       },
-  //       options: {
-  //         scales: {
-  //           y: {
-  //             beginAtZero: true,
-  //           },
-  //         },
-  //       },
-  //     });
-  //   });
   let percent = 30;
 </script>
 
@@ -89,5 +104,36 @@
       </div>
     </div>
   </div>
-  <!-- <canvas bind:this={ctx} id="myChart" /> -->
+  <div class="Furthest-pushed-back-repair-section">
+    <SmallHeader text="Furthest pushed back repair / days:" />
+    <BigNumbers
+      values={pushedBackAppliances}
+      labels={pushedBackAppliancesLabels}
+    />
+    <SmallHeader text="Furthest pushed back repair / days graph:" />
+    <div class="w-11/12 h-80 bg-slate-800">
+      <Chart
+        data={pushedBackAppliancesData}
+        type="bar"
+        colors={["violet"]}
+        height={300}
+      />
+    </div>
+  </div>
+  <div class="Amount-of-appliance-broken-section">
+    <SmallHeader text="Amount of each appliance broken:" />
+    <BigNumbers
+      values={brokenAppliancesValues}
+      labels={brokenAppliancesLabels}
+    />
+    <SmallHeader text="Amount of each appliance broken graph:" />
+    <div class="w-11/12 h-80 bg-slate-800">
+      <Chart
+        data={brokenAppliancesData}
+        type="bar"
+        colors={["violet"]}
+        height={300}
+      />
+    </div>
+  </div>
 </main>
