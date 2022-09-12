@@ -111,7 +111,7 @@
       labels={pushedBackAppliancesLabels}
     />
     <SmallHeader text="Furthest pushed back repair / days graph:" />
-    <div class="w-11/12 h-80 bg-slate-800">
+    <div class="w-11/12 h-80 bg-slate-800 z-0">
       <Chart
         data={pushedBackAppliancesData}
         type="bar"
@@ -127,7 +127,7 @@
       labels={brokenAppliancesLabels}
     />
     <SmallHeader text="Amount of each appliance broken graph:" />
-    <div class="w-11/12 h-80 bg-slate-800">
+    <div class="w-11/12 h-80 bg-slate-800 z-0">
       <Chart
         data={brokenAppliancesData}
         type="bar"

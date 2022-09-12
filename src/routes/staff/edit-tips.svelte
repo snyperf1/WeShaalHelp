@@ -1,40 +1,49 @@
 <script>
-	import EditTips from '$lib/components/EditTips.svelte';
+  import EditTips from "$lib/components/EditTips.svelte";
+  import {
+    doc,
+    updateDoc,
+    getFirestore,
+    query,
+    where,
+    collection,
+    getDocs,
+  } from "firebase/firestore";
+  import { app, user } from "$lib/stores";
+  import { onMount } from "svelte";
+  const db = getFirestore($app);
+  console.log($user);
+  let tipsarr = [];
+  async function getData() {
+    const tipsRef = collection(db, "tips");
+    const q = query(tipsRef, where("id", ">", -1));
+    const querySnapshot = await getDocs(q);
 
-	const tipsarr = [
-		{
-			id: 0,
-			title: 'Not working?',
-			body: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti accusantium, nihil unde dolor veritatis reiciendis consequatur quas! Doloremque natus iure placeat odio nobis. Aliquid esse ducimus accusamus? Temporibus debitis explicabo rerum hic, labore soluta voluptatem maxime dolorum. Facilis quis aliquid sit quisquam fugiat eum minima optio, cum velit, ratione impedit.'
-		},
-		{
-			id: 1,
-			title: 'Not working?',
-			body: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti accusantium, nihil unde dolor veritatis reiciendis consequatur quas! Doloremque natus iure placeat odio nobis. Aliquid esse ducimus accusamus? Temporibus debitis explicabo rerum hic, labore soluta voluptatem maxime dolorum. Facilis quis aliquid sit quisquam fugiat eum minima optio, cum velit, ratione impedit.'
-		},
-		{
-			id: 2,
-			title: 'Not working?',
-			body: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti accusantium, nihil unde dolor veritatis reiciendis consequatur quas! Doloremque natus iure placeat odio nobis. Aliquid esse ducimus accusamus? Temporibus debitis explicabo rerum hic, labore soluta voluptatem maxime dolorum. Facilis quis aliquid sit quisquam fugiat eum minima optio, cum velit, ratione impedit.'
-		},
-		{
-			id: 3,
-			title: 'Not working?',
-			body: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti accusantium, nihil unde dolor veritatis reiciendis consequatur quas! Doloremque natus iure placeat odio nobis. Aliquid esse ducimus accusamus? Temporibus debitis explicabo rerum hic, labore soluta voluptatem maxime dolorum. Facilis quis aliquid sit quisquam fugiat eum minima optio, cum velit, ratione impedit.'
-		},
-		{
-			id: 4,
-			title: 'Not working?',
-			body: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti accusantium, nihil unde dolor veritatis reiciendis consequatur quas! Doloremque natus iure placeat odio nobis. Aliquid esse ducimus accusamus? Temporibus debitis explicabo rerum hic, labore soluta voluptatem maxime dolorum. Facilis quis aliquid sit quisquam fugiat eum minima optio, cum velit, ratione impedit.'
-		}
-	];
-	function handleUpdates(e) {
-		tipsarr[e.detail.id].body = e.detail.newbody;
-	}
+    querySnapshot.forEach((doc) => {
+      tipsarr.push(doc.data());
+      console.log(doc.data());
+      tipsarr = tipsarr;
+    });
+  }
+  onMount(() => getData());
+
+  async function handleUpdates(e) {
+    tipsarr[e.detail.id].body = e.detail.newbody;
+    const tipsRef = doc(db, "tips", e.detail.id.toString());
+
+    await updateDoc(tipsRef, {
+      body: e.detail.newbody,
+    });
+  }
 </script>
 
 <main class="pt-20 ml-64">
-	{#each tipsarr as e}
-		<EditTips title={e.title} bind:body={e.body} id={e.id} on:updateBody={handleUpdates} />
-	{/each}
+  {#each tipsarr as e}
+    <EditTips
+      bind:title={e.title}
+      bind:body={e.body}
+      bind:id={e.id}
+      on:updateBody={handleUpdates}
+    />
+  {/each}
 </main>

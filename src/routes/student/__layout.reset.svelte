@@ -1,7 +1,12 @@
+<script context="module">
+  // Put the code for redirecting user is not logged in
+</script>
+
 <script>
   import "$lib/app.css";
   import Navitem from "$lib/components/Navitem.svelte";
-  import { prevRoutes } from "$lib/stores";
+  //   import { prevRoutes } from "$lib/stores";
+  import { isLoggedIn } from "$lib/stores";
 </script>
 
 <nav class="bg-indigo-500 h-screen w-64 fixed text-white">
@@ -90,15 +95,15 @@
   </ul>
 </nav>
 <!-- Top navbar -->
-<nav class="bg-slate-700 w-screen fixed top-0 h-16 text-white ml-64">
+<nav class="bg-slate-700 w-screen fixed top-0 h-16 text-white ml-64 z-50">
   <div class="ml-5 flex">
     <div class="py-5 flex">
-      {#each $prevRoutes as element}
+      <!-- {#each $prevRoutes as element}
         <button class="mx-2 hover:bg-slate-600 text-slate-300 px-2 rounded"
           >{element}</button
         >
         <p class="text-slate-300">/</p>
-      {/each}
+      {/each} -->
     </div>
   </div>
 </nav>
