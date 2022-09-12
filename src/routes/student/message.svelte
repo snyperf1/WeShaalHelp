@@ -8,6 +8,7 @@
         redirect: "/login",
       };
     }
+    return {};
   }
 </script>
 

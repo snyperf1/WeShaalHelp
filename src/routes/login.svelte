@@ -4,7 +4,6 @@
     GoogleAuthProvider,
     signOut,
     getAuth,
-    type UserCredential,
     browserLocalPersistence,
     setPersistence,
   } from "firebase/auth";
@@ -17,6 +16,7 @@
   async function loginWithGoogle() {
     try {
       const provider = new GoogleAuthProvider();
+      // i changed this from browser session to browser local
       const res = await setPersistence(auth, browserLocalPersistence).then(
         () => {
           return signInWithPopup(auth, provider);
