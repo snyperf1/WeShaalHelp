@@ -1,10 +1,21 @@
+<script context="module">
+  import { get } from "svelte/store";
+  import { isLoggedIn } from "$lib/stores";
+  export async function load() {
+    if (!get(isLoggedIn)) {
+      return {
+        status: 307,
+        redirect: "/login",
+      };
+    }
+  }
+</script>
+
 <script>
   import Userchatbox from "$lib/components/chat/Userchatbox.svelte";
   import Otherchatbox from "$lib/components/chat/Otherchatbox.svelte";
-  import { prevRoutes } from "$lib/stores";
   import Chatinput from "$lib/components/chat/Chatinput.svelte";
   import Namepick from "$lib/components/chat/Namepick.svelte";
-  $prevRoutes = ["Message"];
   let text =
     "Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique exercitationem voluptates cumque. Totam adipisci esse natus aliquam excepturi itaque saepe.";
   let names = [

@@ -1,11 +1,16 @@
 <script context="module">
-  import { currentQuestion } from "$lib/stores";
+  import { currentQuestion, isLoggedIn } from "$lib/stores";
   import { get } from "svelte/store";
   export async function load() {
     if (get(currentQuestion).length == 0) {
       return {
         status: 301,
         redirect: "report/intro",
+      };
+    } else if (!get(isLoggedIn)) {
+      return {
+        status: 307,
+        redirect: "/login",
       };
     }
     return {};

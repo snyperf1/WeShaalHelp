@@ -1,3 +1,16 @@
+<script context="module">
+  import { get } from "svelte/store";
+  import { isLoggedIn } from "$lib/stores";
+  export async function load() {
+    if (!get(isLoggedIn)) {
+      return {
+        status: 307,
+        redirect: "/login",
+      };
+    }
+  }
+</script>
+
 <script>
   import EditTips from "$lib/components/EditTips.svelte";
   import {
