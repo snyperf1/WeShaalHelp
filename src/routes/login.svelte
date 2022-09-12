@@ -9,6 +9,7 @@
   } from "firebase/auth";
   import { getFirestore, doc, setDoc, getDoc } from "firebase/firestore";
   import { user, isLoggedIn, app } from "$lib/stores";
+  import { goto } from "$app/navigation";
 
   const auth = getAuth();
   const db = getFirestore($app);
@@ -30,14 +31,16 @@
 
       const docRef = doc(db, "users", $user.email);
       const docSnap = await getDoc(docRef); // get data from database
+      console.log(docSnap);
 
       if (docSnap.exists()) {
         console.log("Document data:", docSnap.data());
       } else {
         console.log("No such document!");
         try {
-          setDoc(doc(db, "user", $user.email), $user); // set new user data
+          setDoc(doc(db, "users", $user.email), $user); // set new user data
           console.log("successful");
+          goto("/loginform");
         } catch (e) {
           console.log(e.message);
         }
@@ -77,14 +80,21 @@
       >Sign out</button
     >
   {:else}
-    <h3 class="text-white font-semibold text-4xl mb-60 mt-20">
-      Welcome to <span class="text-indigo-400">Rebot</span>.
-    </h3>
-    <button
-      class="cursor-pointer font-medium text-gray-100 bg-indigo-600 p-5 rounded-lg hover:bg-indigo-700"
-      on:click={loginWithGoogle}
-      >Sign in with google
-    </button>
+    <div
+      class="bg-slate-900 mt-40 px-10 py-32 rounded-lg flex justify-center items-center flex-col"
+    >
+      <h3 class="text-white font-semibold text-4xl mb-5">
+        Welcome to <span class="text-indigo-400">Rebot</span>.
+      </h3>
+      <p class="text-gray-300 mb-20 text-xl font-semibold">
+        Managing school appliances with ease
+      </p>
+      <button
+        class="cursor-pointer font-medium text-gray-100 bg-indigo-600 p-5 rounded-lg hover:bg-indigo-700"
+        on:click={loginWithGoogle}
+        >Sign in with google
+      </button>
+    </div>
   {/if}
   <a href="/staff/edit-tips">click on this its for testing</a>
 </body>

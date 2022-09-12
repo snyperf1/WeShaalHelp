@@ -5,6 +5,7 @@
   let selected = false;
   function handleClick() {
     selected = !selected;
+    console.log(index);
     dispatch("userselect", {
       text: index,
     });
@@ -20,7 +21,7 @@
 </script>
 
 <div
-  class="my-5 mx-10 bg-slate-700 text-white flex justify-center h-40 
+  class="my-5 mx-10 bg-slate-700 text-white flex justify-center h-40 grow px-16
   w-full items-center rounded-2xl text-xl cursor-pointer hover:bg-slate-600 transition-colors 
    "
   class:bg-green-400={selected}

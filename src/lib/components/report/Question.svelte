@@ -6,6 +6,10 @@
 
   type TypeQuestion = "multipleChoice" | "checkbox" | "dropdown" | "true-false";
   export let currentQuestion;
+  let multipleChoiceSelected = "";
+  function handleChoose(e) {
+    multipleChoiceSelected = e.detail.text;
+  }
   export let questionContent: string = "Q1: Whats your problem?";
   export let questionType: TypeQuestion = "checkbox";
 
@@ -30,7 +34,11 @@
 
 <div>
   {#if questionType == "multipleChoice"}
-    <MultipleChoice options={optionsMultipleChoice} {questionContent} />
+    <MultipleChoice
+      options={optionsMultipleChoice}
+      {questionContent}
+      on:choose={handleChoose}
+    />
   {:else if questionType == "checkbox"}
     <Multiselect options={optionsMultiSelect} {questionContent} />
   {/if}

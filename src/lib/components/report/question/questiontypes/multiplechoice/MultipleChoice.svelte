@@ -1,12 +1,16 @@
 <script>
   import McqBox from "$lib/components/report/question/questiontypes/multiplechoice/McqBox.svelte";
-
+  import { createEventDispatcher } from "svelte";
+  const dispatch = createEventDispatcher();
   export let questionContent;
   export let options;
   let selected = "";
 
   function handleClick(event) {
     selected = event.detail.text;
+    dispatch("choose", {
+      selected: selected,
+    });
   }
   // https://svelte.dev/tutorial/classes
 </script>
