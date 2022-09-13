@@ -69,6 +69,7 @@
     const docSnap = await getDoc(docRef);
     let statistics = docSnap.data();
     statistics[""];
+    goto("/student/report/outro");
   }
 </script>
 
