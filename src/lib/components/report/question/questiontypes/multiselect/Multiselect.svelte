@@ -1,13 +1,21 @@
 <script>
   import Checkbox from "$lib/components/report/question/questiontypes/multiselect/Checkbox.svelte";
-
+  import { createEventDispatcher } from "svelte";
+  import Others from "./Others.svelte";
+  const dispatch = createEventDispatcher();
   export let options;
   export let questionContent;
-  let selected = [false, false, false, false, false, false, false, false];
+  let selected = [false, false, false, false, false, false, false, ""];
   function changeSelected(e) {
     let index = e.detail.id;
     selected[index] = !selected[index];
     console.log(selected);
+    dispatch("userselect", {
+      selected: selected,
+    });
+  }
+  function handleOthers(e) {
+    selected[selected.length - 1] = e.detail.userinput;
   }
 </script>
 
@@ -21,5 +29,10 @@
     {#each options as option, id}
       <Checkbox {option} {id} on:selected={changeSelected} />
     {/each}
+    <Others on:selected={handleOthers} />
   </div>
 </div>
+<!-- <div class="flex justify-between mt-10 ml-10">
+  <BackButton />
+  <NextButton />
+</div> -->

@@ -1,10 +1,12 @@
 <script>
   import McqBox from "$lib/components/report/question/questiontypes/multiplechoice/McqBox.svelte";
   import { createEventDispatcher } from "svelte";
+
   const dispatch = createEventDispatcher();
   export let questionContent;
   export let options;
-  let selected = "";
+  export let selected = "";
+  let fillcolour = "#1e293b";
 
   function handleClick(event) {
     selected = event.detail.text;

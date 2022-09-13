@@ -2,22 +2,20 @@
   import { createEventDispatcher } from "svelte";
   const dispatch = createEventDispatcher();
 
-  export let option: string;
-  export let id: number;
+  let inputvalue = "";
   const green: string = "#4ADE80";
-  const grey: string = "#1e293b";
   let isclicked: Boolean = false;
-  let fillcolour = grey;
+  let fillcolour = "#1e293b";
   $: {
     if (isclicked) {
       fillcolour = green;
       dispatch("selected", {
-        id: id,
+        userinput: inputvalue,
       });
     } else {
-      fillcolour = grey;
+      fillcolour = "#1e293b";
       dispatch("selected", {
-        id: id,
+        userinput: inputvalue,
       });
     }
   }
@@ -54,12 +52,11 @@
       />
     </svg>
   </div>
-
-  <p
-    class="ml-5 text-base transition-all pr-10"
-    class:font-bold={isclicked}
-    class:text-green-400={isclicked}
-  >
-    {option}
+  <p class="ml-5" class:font-bold={isclicked} class:text-green-400={isclicked}>
+    Others:
   </p>
+  <input
+    class="text-base transition-all pr-10 bg-slate-800 border-b-2 border-white p-2"
+    bind:value={inputvalue}
+  />
 </div>

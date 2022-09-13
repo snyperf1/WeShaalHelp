@@ -1,6 +1,6 @@
 <script context="module">
   import { get } from "svelte/store";
-  import { isLoggedIn } from "$lib/stores";
+  import { isLoggedIn, app } from "$lib/stores";
   export async function load() {
     if (!get(isLoggedIn)) {
       return {
@@ -13,31 +13,30 @@
 </script>
 
 <script>
-  import { prevRoutes } from "$lib/stores";
   import Tip from "$lib/components/Tip.svelte";
-  $prevRoutes = ["Tips"];
-  const tipsarr = [
-    {
-      title: "Not working?",
-      body: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti accusantium, nihil unde dolor veritatis reiciendis consequatur quas! Doloremque natus iure placeat odio nobis. Aliquid esse ducimus accusamus? Temporibus debitis explicabo rerum hic, labore soluta voluptatem maxime dolorum. Facilis quis aliquid sit quisquam fugiat eum minima optio, cum velit, ratione impedit.",
-    },
-    {
-      title: "Not working?",
-      body: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti accusantium, nihil unde dolor veritatis reiciendis consequatur quas! Doloremque natus iure placeat odio nobis. Aliquid esse ducimus accusamus? Temporibus debitis explicabo rerum hic, labore soluta voluptatem maxime dolorum. Facilis quis aliquid sit quisquam fugiat eum minima optio, cum velit, ratione impedit.",
-    },
-    {
-      title: "Not working?",
-      body: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti accusantium, nihil unde dolor veritatis reiciendis consequatur quas! Doloremque natus iure placeat odio nobis. Aliquid esse ducimus accusamus? Temporibus debitis explicabo rerum hic, labore soluta voluptatem maxime dolorum. Facilis quis aliquid sit quisquam fugiat eum minima optio, cum velit, ratione impedit.",
-    },
-    {
-      title: "Not working?",
-      body: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti accusantium, nihil unde dolor veritatis reiciendis consequatur quas! Doloremque natus iure placeat odio nobis. Aliquid esse ducimus accusamus? Temporibus debitis explicabo rerum hic, labore soluta voluptatem maxime dolorum. Facilis quis aliquid sit quisquam fugiat eum minima optio, cum velit, ratione impedit.",
-    },
-    {
-      title: "Not working?",
-      body: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti accusantium, nihil unde dolor veritatis reiciendis consequatur quas! Doloremque natus iure placeat odio nobis. Aliquid esse ducimus accusamus? Temporibus debitis explicabo rerum hic, labore soluta voluptatem maxime dolorum. Facilis quis aliquid sit quisquam fugiat eum minima optio, cum velit, ratione impedit.",
-    },
-  ];
+  import {
+    getFirestore,
+    query,
+    where,
+    collection,
+    getDocs,
+  } from "firebase/firestore";
+  import { onMount } from "svelte";
+  const db = getFirestore(get(app));
+  let tipsarr = [];
+  async function getData() {
+    const tipsRef = collection(db, "tips");
+    const q = query(tipsRef, where("id", ">", -1));
+    const querySnapshot = await getDocs(q);
+
+    querySnapshot.forEach((doc) => {
+      tipsarr.push(doc.data());
+      tipsarr = tipsarr;
+    });
+  }
+  onMount(() => {
+    getData();
+  });
 </script>
 
 <main class="pt-20 ml-64">

@@ -1,6 +1,6 @@
 <script context="module">
   import { get } from "svelte/store";
-  import { isLoggedIn } from "$lib/stores";
+  import { isLoggedIn, app, user } from "$lib/stores";
   export async function load() {
     if (!get(isLoggedIn)) {
       return {
@@ -17,8 +17,33 @@
   import Otherchatbox from "$lib/components/chat/Otherchatbox.svelte";
   import Chatinput from "$lib/components/chat/Chatinput.svelte";
   import Namepick from "$lib/components/chat/Namepick.svelte";
-  let text =
-    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique exercitationem voluptates cumque. Totam adipisci esse natus aliquam excepturi itaque saepe.";
+
+  import {
+    getFirestore,
+    collection,
+    query,
+    where,
+    getDocs,
+  } from "firebase/firestore";
+  import { onMount } from "svelte";
+  const db = getFirestore(get(app));
+  let namesarr = [];
+  async function getNamesData() {
+    const contactsRef = collection(db, "users", "msgcontacts");
+    const q = query(contactsRef, where("id", ">", -1));
+    const querySnapshot = await getDocs(q);
+
+    querySnapshot.forEach((doc) => {
+      namesarr.push(doc.data());
+      namesarr = namesarr;
+    });
+  }
+  async function handleSend() {
+    // TODO: put stuff here
+  }
+  //   onMount(() => {
+  //     getNamesData();
+  //   });
   let names = [
     {
       name: "S3-01 - 18 - Shrinithi",
@@ -41,7 +66,42 @@
       lastMessage: "You: Ok, we will be coming ....",
     },
   ];
-  const messageDate = new Date(1650000000000);
+  let chat = [
+    {
+      text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique exercitationem voluptates cumque. Totam adipisci esse natus aliquam excepturi itaque saepe.",
+      messageDate: new Date(1650000000000),
+      sender: "you",
+    },
+    {
+      text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique exercitationem voluptates cumque. Totam adipisci esse natus aliquam excepturi itaque saepe.",
+      messageDate: new Date(1650000000000),
+      sender: "you",
+    },
+    {
+      text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique exercitationem voluptates cumque. Totam adipisci esse natus aliquam excepturi itaque saepe.",
+      messageDate: new Date(1650000000000),
+      sender: "other",
+    },
+    {
+      text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique exercitationem voluptates cumque. Totam adipisci esse natus aliquam excepturi itaque saepe.",
+      messageDate: new Date(1650000000000),
+      sender: "other",
+    },
+    {
+      text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique exercitationem voluptates cumque. Totam adipisci esse natus aliquam excepturi itaque saepe.",
+      messageDate: new Date(1650000000000),
+      sender: "you",
+    },
+    {
+      text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique exercitationem voluptates cumque. Totam adipisci esse natus aliquam excepturi itaque saepe.",
+      messageDate: new Date(1650000000000),
+      sender: "other",
+    },
+    {
+      text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique exercitationem voluptates cumque. Totam adipisci esse natus aliquam excepturi itaque saepe.",
+      messageDate: new Date(1650000000000),
+    },
+  ];
 </script>
 
 <div class="flex">
@@ -57,15 +117,16 @@
       >
         This is used by the IT helpdesk to show when they are done and also for
         you to say your thanks to the IT helpdesk. Please do not send any
-        unnecessary messages.
+        unnecessary messages unless you feel that it is necessary.
       </div>
     </section>
-    <Userchatbox {text} {messageDate} />
-    <Otherchatbox {text} {messageDate} />
-    <Userchatbox {text} {messageDate} />
-    <Otherchatbox {text} {messageDate} />
-    <Userchatbox {text} {messageDate} />
-    <Otherchatbox {text} {messageDate} />
+    {#each chat as i}
+      {#if i.sender == "you"}
+        <Userchatbox text={i.text} messageDate={i.messageDate} />
+      {:else}
+        <Otherchatbox text={i.text} messageDate={i.messageDate} />
+      {/if}
+    {/each}
     <Chatinput />
   </main>
 </div>

@@ -17,13 +17,13 @@
   function handleClick(e) {
     selected = e.detail.text;
     console.log(selected);
+    isStudent = selected == 0;
   }
   let isLocked;
   $: isLocked = classInput && regNoInput;
   function submitForm() {}
   let options = ["Student", "Teacher"];
-  let isStudent = false;
-  $: isStudent = selected == 0;
+  let isStudent = null;
   let classInput = "";
   let regNoInput = "";
 </script>
@@ -71,11 +71,11 @@
       <button
         on:click={submitForm}
         class="appearance-none bg-indigo-500 rounded-full font-medium py-2 px-10 text-sm text-white transition-colors hover:bg-indigo-600 w-32"
-        class:opacity-50={isLocked}
+        class:opacity-50={!isLocked}
       >
         Submit
       </button>
-    {:else}
+    {:else if isStudent == false}
       <button
         on:click={submitForm}
         class="appearance-none bg-indigo-500 rounded-full font-medium py-2 px-10 text-sm text-white transition-colors hover:bg-indigo-600 w-32"

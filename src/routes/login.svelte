@@ -35,6 +35,7 @@
 
       if (docSnap.exists()) {
         console.log("Document data:", docSnap.data());
+        goto("/student");
       } else {
         console.log("No such document!");
         try {
@@ -68,33 +69,30 @@
       console.log(e);
     }
   }
-  //   $: if ($isLoggedIn) {
-
-  //   }
 </script>
 
-<body class="flex justify-center items-center flex-col">
-  {#if $isLoggedIn}
+<main class="flex justify-center items-center flex-col">
+  <!-- {#if $isLoggedIn}
     <p class="text-gray-100">Welcome, {$user.displayName}!</p>
     <button class="text-gray-100 cursor-pointer" on:click={logout}
       >Sign out</button
-    >
-  {:else}
-    <div
-      class="bg-slate-900 mt-40 px-10 py-32 rounded-lg flex justify-center items-center flex-col"
-    >
-      <h3 class="text-white font-semibold text-4xl mb-5">
-        Welcome to <span class="text-indigo-400">Rebot</span>.
-      </h3>
-      <p class="text-gray-300 mb-20 text-xl font-semibold">
-        Managing school appliances with ease
-      </p>
-      <button
-        class="cursor-pointer font-medium text-gray-100 bg-indigo-600 p-5 rounded-lg hover:bg-indigo-700"
-        on:click={loginWithGoogle}
-        >Sign in with google
-      </button>
-    </div>
-  {/if}
-  <a href="/staff/edit-tips">click on this its for testing</a>
-</body>
+    > -->
+  <!-- {:else} -->
+  <div
+    class="bg-slate-900 mt-40 px-10 py-32 rounded-lg flex justify-center items-center flex-col"
+  >
+    <h3 class="text-white font-semibold text-4xl mb-5">
+      Welcome to <span class="text-indigo-400">Rebot</span>.
+    </h3>
+    <p class="text-gray-300 mb-20 text-xl font-semibold">
+      Managing school appliances with ease
+    </p>
+    <button
+      class="cursor-pointer font-medium text-gray-100 bg-indigo-600 p-5 rounded-lg hover:bg-indigo-700"
+      on:click={loginWithGoogle}
+      >Sign in with google
+    </button>
+  </div>
+  <!-- {/if} -->
+  <!-- <a href="/student/report">click on this its for testing</a> -->
+</main>

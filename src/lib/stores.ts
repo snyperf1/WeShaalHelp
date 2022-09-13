@@ -12,3 +12,16 @@ export const prevRoutes: Writable<string[]> = writable([]);
 export const isLoggedIn = writable(false);
 export const currentQuestion: Writable<string[]> = writable([]);
 export const app: any = writable({});
+
+// report
+export const answers = writable([
+  [undefined, undefined],
+  [undefined, undefined],
+  [undefined, undefined],
+  [undefined, undefined],
+  undefined,
+]);
+export const answerProperties = {
+  deviceReport: undefined,
+  teacherReport: undefined,
+};
