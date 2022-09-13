@@ -27,11 +27,11 @@
   let selected = undefined;
   const questionContent = "Q3. Please select all that apply.";
   let options = [
-    "Projector does not stay down",
+    "Projector screen does not stay down",
     "Projector not powering on",
     "Cannot connect mac to projector",
-    "Control panel not working",
-    "Projector screen glitching",
+    "Cannot connect to wifi router",
+    "Projector glitching",
     "Speakers have no sound",
     "Speakers are glitching",
   ];
@@ -53,6 +53,7 @@
     }
     newarr.push(selected[selected.length - 1]);
     console.log(newarr);
+    console.log([selected, newarr]);
     $answers[2] = [selected, newarr];
     console.log($answers);
     goto("/student/report/questions/report-device-3");

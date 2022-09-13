@@ -24,7 +24,7 @@
   import NextButton from "$lib/components/report/question/NextButton.svelte";
   import { goto } from "$app/navigation";
 
-  let selected = -1;
+  let selected = $answers[1][0];
   const questionContent = "Q2. Which room is affected?";
   let options = [
     "S3-01",
@@ -71,6 +71,7 @@
         {questionContent}
         {options}
         pickerContent="Select a Classroom"
+        bind:selected
       />
     </div>
     <div class="flex justify-between mt-20 ml-10">

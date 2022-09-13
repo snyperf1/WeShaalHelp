@@ -1,5 +1,5 @@
 <script context="module">
-  import { answers, currentQuestion, isLoggedIn } from "$lib/stores";
+  import { answers, currentQuestion, isLoggedIn, app } from "$lib/stores";
   import { get } from "svelte/store";
   export async function load() {
     if (!get(isLoggedIn)) {
@@ -20,10 +20,18 @@
 <script>
   import Progress from "$lib/components/report/Progress.svelte";
   import BackButton from "$lib/components/report/question/BackButton.svelte";
-  import NextButton from "$lib/components/report/question/NextButton.svelte";
+  import {
+    collection,
+    addDoc,
+    getFirestore,
+    serverTimestamp,
+    doc,
+    getDoc,
+  } from "firebase/firestore";
   import { goto } from "$app/navigation";
 
-  console.log($answers);
+  //   console.log($answers);
+  const db = getFirestore($app);
   const teacherPath = [
     "Q1. What do you want to report?",
     "Q2. Which room is affected?",
@@ -31,7 +39,13 @@
     "Q4. Which teacher is supposed to be in class at this timing?",
     "Q5. Do you have any other remarks? (optional)",
   ];
-
+  const devicePath = [
+    "Q1. What do you want to report?",
+    "Q2. Which room is affected?",
+    "Q3. Please select all those that apply.",
+    "Q4. I can verify that I have checked the tips page and tried to troubleshoot but failed. ",
+    "Q5. Do you have any other remarks for this device? (optional)",
+  ];
   function handleGoPrev() {
     // go back
     if ($answers[0][0] == 2) {
@@ -40,7 +54,22 @@
       goto("/student/report/questions/report-device-4");
     }
   }
-  function handleNext() {}
+  async function handleNext() {
+    let data = {};
+    for (let i = 0; i < $answers.length; i++) {
+      const element = $answers[i];
+      data[`Question ${i + 1}`] = element[1];
+    }
+    data.timeStamp = serverTimestamp();
+    // put it in reports
+    await addDoc(collection(db, "reports"), data);
+
+    // update data
+    const docRef = doc(db, "data", "data");
+    const docSnap = await getDoc(docRef);
+    let statistics = docSnap.data();
+    statistics[""];
+  }
 </script>
 
 <main class="pt-20 ml-64 text-white">
@@ -65,15 +94,29 @@
             {:else}
               <p class="mb-5 font-light">Ans: {e[1]}</p>
             {/if}
-          {:else}
-            <p>nothing to show :(</p>
+          {/each}
+        {:else}
+          {#each $answers as e, i}
+            <h3 class="font-bold">{devicePath[i]}</h3>
+            {#if i == 4}
+              <p class="mb-5 font-light">Ans: {e}</p>
+            {:else if i == 2}
+              <p class="mb-5 font-light">Ans: {e[1].join(", ")}</p>
+            {:else}
+              <p class="mb-5 font-light">Ans: {e[1]}</p>
+            {/if}
           {/each}
         {/if}
       </div>
     </div>
     <div class="flex justify-between mt-20 ml-10">
       <BackButton on:click={handleGoPrev} />
-      <NextButton on:click={handleNext} />
+      <button
+        on:click={handleNext}
+        class="appearance-none bg-indigo-600 rounded-full font-medium text-white py-2 px-10 text-sm transition-colors hover:bg-indigo-700"
+      >
+        Submit
+      </button>
     </div>
   </div>
 </main>

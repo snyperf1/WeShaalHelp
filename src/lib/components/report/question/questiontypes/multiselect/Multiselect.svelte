@@ -9,7 +9,6 @@
   function changeSelected(e) {
     let index = e.detail.id;
     selected[index] = !selected[index];
-    console.log(selected);
     dispatch("userselect", {
       selected: selected,
     });

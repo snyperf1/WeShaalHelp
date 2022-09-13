@@ -32,7 +32,7 @@
     goto("/student/report/questions/report-device-2");
   }
   function handleNext() {
-    $answers[2] = [isSelected, "I have checked"];
+    $answers[3] = [isSelected, "I have checked"];
     goto("/student/report/questions/report-device-4");
   }
 </script>
