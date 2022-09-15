@@ -25,8 +25,10 @@
   import { goto } from "$app/navigation";
 
   let isSelected = false;
+  let isLocked = true;
   function handleSelect() {
     isSelected = !isSelected;
+    isLocked = false;
   }
   function handleGoPrev() {
     goto("/student/report/questions/report-device-2");
@@ -58,6 +60,6 @@
   </div>
   <div class="flex justify-between mt-20 ml-10 pr-20">
     <BackButton on:click={handleGoPrev} />
-    <NextButton on:click={handleNext} />
+    <NextButton on:click={handleNext} bind:isLocked />
   </div>
 </main>

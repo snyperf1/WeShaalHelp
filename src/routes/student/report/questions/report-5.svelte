@@ -56,20 +56,28 @@
   }
   async function handleNext() {
     let data = {};
-    for (let i = 0; i < $answers.length; i++) {
-      const element = $answers[i];
-      data[`Question ${i + 1}`] = element[1];
+    if ($answers[0][0] == 0 || $answers[1][0] == 1) {
+      for (let i = 0; i < $answers.length; i++) {
+        const element = $answers[i];
+        data[`Question ${i + 1}`] = element[1];
+      }
+      data.timeStamp = serverTimestamp();
+      // put it in reports
+      await addDoc(collection(db, "reports"), data);
     }
-    data.timeStamp = serverTimestamp();
-    // put it in reports
-    await addDoc(collection(db, "reports"), data);
 
     // update data
-    const docRef = doc(db, "data", "data");
-    const docSnap = await getDoc(docRef);
-    let statistics = docSnap.data();
-    statistics[""];
-    goto("/student/report/outro");
+    // const docRef = doc(db, "data", "data");
+    // const docSnap = await getDoc(docRef);
+    // let statistics = docSnap.data();
+    // const newstatistics = {}
+    // const statisticsKeys = Object.keys(statistics)
+    // for (let i = 0; i < statisticsKeys.length; i++) {
+
+    //     newstatistics[statisticsKeys[i]] = statistics[statisticsKeys[i]]
+    // }
+
+    // goto("/student/report/outro");
   }
 </script>
 

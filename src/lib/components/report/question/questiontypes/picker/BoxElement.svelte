@@ -14,7 +14,7 @@
 
   const dispatch = createEventDispatcher();
   function handleClick() {
-    isSelected = !isSelected;
+    isSelected = true;
     dispatch("userselect", {
       text: index,
     });

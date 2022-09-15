@@ -58,5 +58,6 @@
   <input
     class="text-base transition-all pr-10 bg-slate-800 border-b-2 border-white p-2"
     bind:value={inputvalue}
+    class:text-green-400={isclicked}
   />
 </div>

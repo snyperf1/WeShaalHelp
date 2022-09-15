@@ -25,6 +25,7 @@
   import { goto } from "$app/navigation";
 
   let selected = $answers[3][0];
+  let isLocked = true;
   const questionContent =
     "Q4. What teacher is supposed to be in class at this time?";
   let options = [
@@ -46,6 +47,7 @@
     "Mr B",
   ];
   function handleSelect(event) {
+    isLocked = false;
     selected = event.detail.selected;
     console.log(selected);
   }
@@ -75,7 +77,7 @@
     </div>
     <div class="flex justify-between mt-20 ml-10">
       <BackButton on:click={handleGoPrev} />
-      <NextButton on:click={handleNext} />
+      <NextButton on:click={handleNext} bind:isLocked />
     </div>
   </div>
 </main>

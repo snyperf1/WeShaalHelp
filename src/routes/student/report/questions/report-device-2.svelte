@@ -25,18 +25,30 @@
   import Multiselect from "$lib/components/report/question/questiontypes/multiselect/Multiselect.svelte";
 
   let selected = undefined;
+  let isLocked = true;
   const questionContent = "Q3. Please select all that apply.";
   let options = [
-    "Projector screen does not stay down",
-    "Projector not powering on",
-    "Cannot connect mac to projector",
-    "Cannot connect to wifi router",
-    "Projector glitching",
-    "Speakers have no sound",
-    "Speakers are glitching",
+    "Projector screen broken",
+    "Projector broken",
+    "Ceiling Fan(s) broken",
+    "Light(s) broken",
+    "Teacher's table's fan not working",
+    "Wifi router broken",
+    "Speakers broken",
+    "Door lock broken",
+    "Aircon broken",
   ];
   function handleSelect(event) {
     selected = event.detail.selected;
+    let sum = 0;
+    for (let i = 0; i < selected.length; i++) {
+      sum += Number(Boolean(selected[i]));
+    }
+    if (sum == 0) {
+      isLocked = true;
+    } else {
+      isLocked = false;
+    }
     console.log(selected);
   }
 
@@ -52,7 +64,6 @@
       }
     }
     newarr.push(selected[selected.length - 1]);
-    console.log(newarr);
     console.log([selected, newarr]);
     $answers[2] = [selected, newarr];
     console.log($answers);
@@ -68,9 +79,9 @@
     <div class="flex flex-col justify-center items-center w-full pl-20 ">
       <Multiselect on:userselect={handleSelect} {questionContent} {options} />
     </div>
-    <div class="flex justify-between mt-20 ml-10">
+    <div class="flex justify-between mt-10 ml-10">
       <BackButton on:click={handleGoPrev} />
-      <NextButton on:click={handleNext} />
+      <NextButton on:click={handleNext} bind:isLocked />
     </div>
   </div>
 </main>

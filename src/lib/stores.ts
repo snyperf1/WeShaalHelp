@@ -19,9 +19,9 @@ export const answers = writable([
   [undefined, undefined],
   [undefined, undefined],
   [undefined, undefined],
-  undefined,
+  "",
 ]);
-export const answerProperties = {
-  deviceReport: undefined,
-  teacherReport: undefined,
-};
+// export const answerProperties = {
+//   deviceReport: undefined,
+//   teacherReport: undefined,
+// };

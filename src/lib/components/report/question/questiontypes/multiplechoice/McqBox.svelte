@@ -4,7 +4,7 @@
 
   let selected = false;
   function handleClick() {
-    selected = !selected;
+    selected = true;
     console.log(index);
     dispatch("userselect", {
       text: index,
