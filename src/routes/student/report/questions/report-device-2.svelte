@@ -28,15 +28,15 @@
   let isLocked = true;
   const questionContent = "Q3. Please select all that apply.";
   let options = [
-    "Projector screen broken",
-    "Projector broken",
+    "Aircon broken",
     "Ceiling Fan(s) broken",
     "Light(s) broken",
-    "Teacher's table's fan not working",
+    "Door lock broken",
+    "Projector screen broken",
+    "Projector broken",
     "Wifi router broken",
     "Speakers broken",
-    "Door lock broken",
-    "Aircon broken",
+    "Teacher's table's fan not working",
   ];
   function handleSelect(event) {
     selected = event.detail.selected;

@@ -38,6 +38,7 @@
       namesarr = namesarr;
     });
   }
+  //   function not tested yet for both the event dispatcher and this
   async function handleSend() {
     // TODO: put stuff here
   }
@@ -127,7 +128,7 @@
         <Otherchatbox text={i.text} messageDate={i.messageDate} />
       {/if}
     {/each}
-    <Chatinput />
+    <Chatinput on:message={handleSend} />
   </main>
 </div>
 

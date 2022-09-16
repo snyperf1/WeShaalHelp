@@ -1,5 +1,5 @@
 <script context="module">
-  import { answers, currentQuestion, isLoggedIn, app } from "$lib/stores";
+  import { answers, currentQuestion, isLoggedIn, app, user } from "$lib/stores";
   import { get } from "svelte/store";
   export async function load() {
     if (!get(isLoggedIn)) {
@@ -27,6 +27,8 @@
     serverTimestamp,
     doc,
     getDoc,
+    updateDoc,
+    setDoc,
   } from "firebase/firestore";
   import { goto } from "$app/navigation";
 
@@ -69,21 +71,37 @@
     // update data
     const docRef = doc(db, "data", "data");
     const docSnap = await getDoc(docRef);
-    let statistics = docSnap.data();
+    const statistics = docSnap.data();
     const newstatistics = {};
     const statisticsKeys = Object.keys(statistics);
     console.log(statisticsKeys);
-    // for (let i = 0; i < statisticsKeys.length; i++) {
 
-    //     newstatistics[statisticsKeys[i]] = statistics[statisticsKeys[i]]
-    // }
-
-    // TODO:
-    // Make the newstatistics properly by switch statements
+    // Make the newstatistics properly
+    for (let i = 0; i < statisticsKeys.length; i++) {
+      if ($answers[2][0][i] === true) {
+        newstatistics[statisticsKeys[i]] = statistics[statisticsKeys[i]] + 1;
+      }
+    }
     // post the newstatistics onto db
+    newstatistics["Classes with broken appliances"] =
+      statistics["Classes with broken appliances"] + 1;
+    newstatistics["timestamp"] = serverTimestamp();
+    console.log(newstatistics);
+    // @ts-ignore
+    await updateDoc(docRef, newstatistics);
     // edit the "classes" document in db, where there
     // will be fields to show the things functioning in the class
+    const classesRef = doc(db, "data", "classes");
+    const classUpdateData = {};
+    classUpdateData[`${get(answers)[1][1]}`] = false;
+
+    await updateDoc(classesRef, classUpdateData);
+
     // edit the "chats" collection to make a chat
+    const chatDocName = `${get(user).displayName}-staff`;
+    const chatsRef = doc(db, "chats", chatDocName);
+    await setDoc(chatsRef, {}); // there is no need for any data
+
     // make a dynamic route for messages 😭
 
     goto("/student/report/outro");
