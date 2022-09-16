@@ -67,17 +67,26 @@
     }
 
     // update data
-    // const docRef = doc(db, "data", "data");
-    // const docSnap = await getDoc(docRef);
-    // let statistics = docSnap.data();
-    // const newstatistics = {}
-    // const statisticsKeys = Object.keys(statistics)
+    const docRef = doc(db, "data", "data");
+    const docSnap = await getDoc(docRef);
+    let statistics = docSnap.data();
+    const newstatistics = {};
+    const statisticsKeys = Object.keys(statistics);
+    console.log(statisticsKeys);
     // for (let i = 0; i < statisticsKeys.length; i++) {
 
     //     newstatistics[statisticsKeys[i]] = statistics[statisticsKeys[i]]
     // }
 
-    // goto("/student/report/outro");
+    // TODO:
+    // Make the newstatistics properly by switch statements
+    // post the newstatistics onto db
+    // edit the "classes" document in db, where there
+    // will be fields to show the things functioning in the class
+    // edit the "chats" collection to make a chat
+    // make a dynamic route for messages 😭
+
+    goto("/student/report/outro");
   }
 </script>
 

@@ -21,7 +21,11 @@
   }
   let isLocked;
   $: isLocked = classInput && regNoInput;
-  function submitForm() {}
+  function submitForm() {
+    // write the $user store to db and the fields
+    // "registerNumber" and "class"
+    // regex for class in format "S3-01" is /(S[1-4]-0[0-9])/
+  }
   let options = ["Student", "Teacher"];
   let isStudent = null;
   let classInput = "";
