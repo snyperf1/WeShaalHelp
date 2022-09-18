@@ -84,20 +84,24 @@
         State of appliances in classes
       </h2>
       <div class="flex">
-        <Card
-          color="bg-red-400"
-          maincolor="#FA6262"
-          opacity="#5b4b5a"
-          value="10"
-          capacity="49"
-        />
-        <Card
-          color="bg-green-400"
-          maincolor="#22c55e"
-          opacity="#355c57"
-          value="15"
-          capacity="49"
-        />
+        <a href="/staff/dashboard/broken-appliances">
+          <Card
+            color="bg-red-400"
+            maincolor="#FA6262"
+            opacity="#5b4b5a"
+            value="10"
+            capacity="49"
+          />
+        </a>
+        <a href="/staff/dashboard/working-appliances">
+          <Card
+            color="bg-green-400"
+            maincolor="#22c55e"
+            opacity="#355c57"
+            value="15"
+            capacity="49"
+          />
+        </a>
       </div>
     </div>
     <div>
