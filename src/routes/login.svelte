@@ -26,6 +26,8 @@
       $user.displayName = res.user["displayName"];
       $user.email = res.user["email"];
       $user.photoURL = res.user["photoURL"];
+      $user.uid = res.user["uid"];
+
       $isLoggedIn = true;
       console.log($user);
 
@@ -39,15 +41,12 @@
       } else {
         console.log("No such document!");
         try {
-          setDoc(doc(db, "users", $user.email), $user); // set new user data
-          console.log("successful");
+          // setDoc(doc(db, "users", $user.email), $user); // set new user data
+          // console.log("successful");
           goto("/loginform");
         } catch (e) {
           console.log(e.message);
         }
-
-        // TODO: redirect user to a page where they
-        // decide whether they want to be a student or cher and so on
       }
 
       //   if ($user.email.includes("s2020.ssts.edu.sg")) {

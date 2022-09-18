@@ -26,7 +26,9 @@ const c = [
 	() => import("../../src/routes/staff/dashboard/working-appliances.svelte"),
 	() => import("../../src/routes/staff/dashboard/broken-appliances.svelte"),
 	() => import("../../src/routes/staff/dashboard/appliances.svelte"),
-	() => import("../../src/routes/staff/edit-tips.svelte")
+	() => import("../../src/routes/staff/edit-tips.svelte"),
+	() => import("../../src/routes/staff/message/index.svelte"),
+	() => import("../../src/routes/staff/message/[msgid].svelte")
 ];
 
 const d = decodeURIComponent;
@@ -102,7 +104,13 @@ export const routes = [
 	[/^\/staff\/dashboard\/appliances\/?$/, [c[21], c[26]], []],
 
 	// src/routes/staff/edit-tips.svelte
-	[/^\/staff\/edit-tips\/?$/, [c[21], c[27]], []]
+	[/^\/staff\/edit-tips\/?$/, [c[21], c[27]], []],
+
+	// src/routes/staff/message/index.svelte
+	[/^\/staff\/message\/?$/, [c[21], c[28]], []],
+
+	// src/routes/staff/message/[msgid].svelte
+	[/^\/staff\/message\/([^/]+?)\/?$/, [c[21], c[29]], [], (m) => ({ msgid: d(m[1])})]
 ];
 
 // we import the root layout/error components eagerly, so that

@@ -20,96 +20,72 @@
 
   import {
     getFirestore,
-    collection,
     query,
-    where,
+    onSnapshot,
+    collection,
+    orderBy,
+    limit,
+    addDoc,
+    serverTimestamp,
     getDocs,
   } from "firebase/firestore";
-  import { onMount } from "svelte";
+  import { afterUpdate, onDestroy, onMount } from "svelte";
   const db = getFirestore(get(app));
-  let namesarr = [];
-  async function getNamesData() {
-    const contactsRef = collection(db, "users", "msgcontacts");
-    const q = query(contactsRef, where("id", ">", -1));
-    const querySnapshot = await getDocs(q);
+  let chat = [];
+  let textValue = "";
+  let unsub;
+  const chatsRef = collection(db, "chats", get(user).email, "messages");
+  afterUpdate(() => {
+    document.querySelector("#lasttext").scrollIntoView(false);
+  });
+  async function getData() {
+    // TODO: decide on what to put for orderBy("") and limit()
+    const q = query(chatsRef, orderBy("messageDate", "desc"), limit(10));
 
-    querySnapshot.forEach((doc) => {
-      namesarr.push(doc.data());
-      namesarr = namesarr;
-    });
+    unsub = onSnapshot(
+      q,
+      (snapshot) => {
+        let changes = snapshot.docChanges();
+        const source = snapshot.metadata.hasPendingWrites ? "Local" : "Server";
+        if (source == "Server") {
+          if (changes.length > 1) {
+            changes.forEach((doc) => {
+              const newmessage = doc.doc.data();
+              console.log("newmessage: ", newmessage);
+              chat = [newmessage, ...chat];
+            });
+          } else {
+            const newmessage = changes[0].doc.data();
+            chat = [...chat, newmessage];
+          }
+        }
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
+
   //   function not tested yet for both the event dispatcher and this
   async function handleSend() {
-    // TODO: put stuff here
+    await addDoc(chatsRef, {
+      text: textValue,
+      messageDate: serverTimestamp(),
+      uid: get(user).uid,
+    });
+    textValue = "";
   }
-  //   onMount(() => {
-  //     getNamesData();
-  //   });
-  let names = [
-    {
-      name: "S3-01 - 18 - Shrinithi",
-      lastMessage: "You: Ok, we will be coming ....",
-    },
-    {
-      name: "S3-01 - 18 - Shrinithi",
-      lastMessage: "You: Ok, we will be coming ....",
-    },
-    {
-      name: "S3-01 - 18 - Shrinithi",
-      lastMessage: "You: Ok, we will be coming ....",
-    },
-    {
-      name: "S3-01 - 18 - Shrinithi",
-      lastMessage: "You: Ok, we will be coming ....",
-    },
-    {
-      name: "S3-01 - 18 - Shrinithi",
-      lastMessage: "You: Ok, we will be coming ....",
-    },
-  ];
-  let chat = [
-    {
-      text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique exercitationem voluptates cumque. Totam adipisci esse natus aliquam excepturi itaque saepe.",
-      messageDate: new Date(1650000000000),
-      sender: "you",
-    },
-    {
-      text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique exercitationem voluptates cumque. Totam adipisci esse natus aliquam excepturi itaque saepe.",
-      messageDate: new Date(1650000000000),
-      sender: "you",
-    },
-    {
-      text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique exercitationem voluptates cumque. Totam adipisci esse natus aliquam excepturi itaque saepe.",
-      messageDate: new Date(1650000000000),
-      sender: "other",
-    },
-    {
-      text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique exercitationem voluptates cumque. Totam adipisci esse natus aliquam excepturi itaque saepe.",
-      messageDate: new Date(1650000000000),
-      sender: "other",
-    },
-    {
-      text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique exercitationem voluptates cumque. Totam adipisci esse natus aliquam excepturi itaque saepe.",
-      messageDate: new Date(1650000000000),
-      sender: "you",
-    },
-    {
-      text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique exercitationem voluptates cumque. Totam adipisci esse natus aliquam excepturi itaque saepe.",
-      messageDate: new Date(1650000000000),
-      sender: "other",
-    },
-    {
-      text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique exercitationem voluptates cumque. Totam adipisci esse natus aliquam excepturi itaque saepe.",
-      messageDate: new Date(1650000000000),
-    },
-  ];
+  onMount(() => {
+    getData();
+  });
+  onDestroy(() => unsub());
 </script>
 
 <div class="flex">
-  <nav class="ml-64 mt-16 bg-gray-800 max-h-screen overflow-y-scroll namesbar">
-    {#each names as element}
-      <Namepick name={element.name} preview={element.lastMessage} />
-    {/each}
+  <nav
+    class="w-2/5 ml-64 mt-16 bg-gray-800 namesbar flex flex-col justify-start"
+  >
+    <Namepick name="Staff" />
   </nav>
   <main class="pt-20 overflow-y-scroll max-h-screen">
     <section class="flex justify-center">
@@ -121,19 +97,16 @@
         unnecessary messages unless you feel that it is necessary.
       </div>
     </section>
-    {#each chat as i}
-      {#if i.sender == "you"}
-        <Userchatbox text={i.text} messageDate={i.messageDate} />
-      {:else}
-        <Otherchatbox text={i.text} messageDate={i.messageDate} />
-      {/if}
-    {/each}
-    <Chatinput on:message={handleSend} />
+    <section>
+      {#each chat as i}
+        {#if i.uid != get(user).uid}
+          <Userchatbox text={i.text} messageDate={i.messageDate} />
+        {:else}
+          <Otherchatbox text={i.text} messageDate={i.messageDate} />
+        {/if}
+      {/each}
+      <div class="mt-20" id="lasttext" />
+    </section>
+    <Chatinput bind:textValue on:message={handleSend} />
   </main>
 </div>
-
-<style>
-  .namesbar {
-    min-width: fit-content;
-  }
-</style>

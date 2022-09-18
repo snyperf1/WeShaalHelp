@@ -1,8 +1,8 @@
 <script context="module">
   import { get } from "svelte/store";
-  import { isLoggedIn } from "$lib/stores";
+  import { isLoggedIn, user } from "$lib/stores";
   export async function load() {
-    if (!get(isLoggedIn)) {
+    if (!get(isLoggedIn) && get(user).isStudent === true) {
       return {
         status: 307,
         redirect: "/login",

@@ -3,10 +3,18 @@ export const user: Writable<{
   displayName: string;
   email: string;
   photoURL: string;
+  class: string;
+  registerNumber: number;
+  uid: string;
+  isStudent: boolean;
 }> = writable({
   displayName: "",
   email: "",
   photoURL: "",
+  class: "",
+  registerNumber: undefined,
+  uid: "",
+  isStudent: undefined,
 });
 export const prevRoutes: Writable<string[]> = writable([]);
 export const isLoggedIn = writable(false);
@@ -21,6 +29,19 @@ export const answers = writable([
   [undefined, undefined],
   "",
 ]);
+
+export let chatNames: Writable<
+  [
+    {
+      name: String;
+    }
+  ]
+> = writable([
+  {
+    name: "",
+  },
+]);
+
 // export const answerProperties = {
 //   deviceReport: undefined,
 //   teacherReport: undefined,

@@ -98,9 +98,11 @@
     await updateDoc(classesRef, classUpdateData);
 
     // edit the "chats" collection to make a chat
-    const chatDocName = `${get(user).displayName}-staff`;
+    const chatDocName = get(user).email;
     const chatsRef = doc(db, "chats", chatDocName);
     await setDoc(chatsRef, {}); // there is no need for any data
+
+    // TODO: also add a "contacts" to the current user
 
     // make a dynamic route for messages 😭
 
