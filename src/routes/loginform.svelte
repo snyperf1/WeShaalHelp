@@ -68,6 +68,7 @@
 
     // write the $user store to db and the fields
     await setDoc(doc(db, "users", $user.email), $user); // set new user data
+    await setDoc(doc(db, "chats", $user.email), {});
     // "registerNumber" and "class"
     if (isStudent) {
       goto("/student");
@@ -82,7 +83,7 @@
 </script>
 
 <body class="text-white flex flex-col items-center">
-  <h3 class="text-3xl font-bold mt-10">
+  <h3 class="text-3xl font-bold mt-10 mb-20">
     Before signing up, please fill these in:
   </h3>
   <div class="flex flex-col gap-5">
@@ -120,7 +121,7 @@
       />
       <div class="flex justify-between text-xl">
         <label for="registernumber" class="font-semibold text-white"
-          >3. State your register number (e.g. 1, 28, 10)</label
+          >3. State your reg no. (e.g. 1, 28, 10)</label
         >
         {#if regNoValid === true}
           <div class="text-green-400 font-medium text-base">Valid</div>

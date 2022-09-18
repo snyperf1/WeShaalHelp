@@ -30,6 +30,9 @@ export const answers = writable([
   "",
 ]);
 
+export let dynamicurl: Writable<string> = writable("");
+export let username: Writable<string> = writable("");
+
 export let chatNames: Writable<
   [
     {

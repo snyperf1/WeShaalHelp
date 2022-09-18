@@ -27,9 +27,9 @@
     limit,
     addDoc,
     serverTimestamp,
-    getDocs,
   } from "firebase/firestore";
   import { afterUpdate, onDestroy, onMount } from "svelte";
+  import { goto } from "$app/navigation";
   const db = getFirestore(get(app));
   let chat = [];
   let textValue = "";
@@ -106,7 +106,7 @@
         {/if}
       {/each}
       <div class="mt-20" id="lasttext" />
+      <Chatinput bind:textValue on:message={handleSend} />
     </section>
-    <Chatinput bind:textValue on:message={handleSend} />
   </main>
 </div>

@@ -37,7 +37,11 @@
 
       if (docSnap.exists()) {
         console.log("Document data:", docSnap.data());
-        goto("/student");
+        if (docSnap.data().isStudent == false) {
+          goto("/staff");
+        } else {
+          goto("/student");
+        }
       } else {
         console.log("No such document!");
         try {
