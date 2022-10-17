@@ -67,7 +67,7 @@
         <p slot="label">Message</p>
       </Navitem>
     </a>
-    <a href="/staff/report">
+    <!-- <a href="/staff/report">
       <Navitem>
         <svg
           slot="svg"
@@ -91,7 +91,7 @@
       <div class="rounded-md bg-indigo-500 mx-3 py-4 px-5">
         <p class="text-left">Todos</p>
       </div>
-    </li>
+    </li> -->
   </ul>
 </nav>
 <!-- top navbar -->
