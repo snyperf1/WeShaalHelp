@@ -1,6 +1,6 @@
 const c = [
 	() => import("../../src/routes/__layout.svelte"),
-	() => import("../runtime/components/error.svelte"),
+	() => import("../../src/routes/__error.svelte"),
 	() => import("../../src/routes/index.svelte"),
 	() => import("../../src/routes/loginform.svelte"),
 	() => import("../../src/routes/student/__layout.reset.svelte"),
