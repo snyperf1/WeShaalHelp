@@ -25,8 +25,8 @@
   import { goto } from "$app/navigation";
   let selected = $answers[0][0];
   let options: string[] = [
-    "An Electrical Appliance is not working properly",
-    "A non-Electrical Appliance is broken",
+    "ICT equipment not working properly",
+    "Infrastructure broken",
     "The current teacher is missing",
     // "Others",
   ];
