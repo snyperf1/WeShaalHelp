@@ -41,50 +41,50 @@
     });
   }
   //   function not tested yet for both the event dispatcher and this
-  async function handleSend() {
-    // TODO: put stuff here
-  }
+  // async function handleSend() {
+  //   // TODO: put stuff here
+  // }
   onMount(() => {
     getNamesData();
   });
 
-  let chat = [
-    {
-      text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique exercitationem voluptates cumque. Totam adipisci esse natus aliquam excepturi itaque saepe.",
-      messageDate: new Date(1650000000000),
-      sender: "you",
-    },
-    {
-      text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique exercitationem voluptates cumque. Totam adipisci esse natus aliquam excepturi itaque saepe.",
-      messageDate: new Date(1650000000000),
-      sender: "you",
-    },
-    {
-      text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique exercitationem voluptates cumque. Totam adipisci esse natus aliquam excepturi itaque saepe.",
-      messageDate: new Date(1650000000000),
-      sender: "other",
-    },
-    {
-      text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique exercitationem voluptates cumque. Totam adipisci esse natus aliquam excepturi itaque saepe.",
-      messageDate: new Date(1650000000000),
-      sender: "other",
-    },
-    {
-      text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique exercitationem voluptates cumque. Totam adipisci esse natus aliquam excepturi itaque saepe.",
-      messageDate: new Date(1650000000000),
-      sender: "you",
-    },
-    {
-      text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique exercitationem voluptates cumque. Totam adipisci esse natus aliquam excepturi itaque saepe.",
-      messageDate: new Date(1650000000000),
-      sender: "other",
-    },
-    {
-      text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique exercitationem voluptates cumque. Totam adipisci esse natus aliquam excepturi itaque saepe.",
-      messageDate: new Date(1650000000000),
-      sender: "other",
-    },
-  ];
+  // let chat = [
+  //   {
+  //     text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique exercitationem voluptates cumque. Totam adipisci esse natus aliquam excepturi itaque saepe.",
+  //     messageDate: new Date(1650000000000),
+  //     sender: "you",
+  //   },
+  //   {
+  //     text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique exercitationem voluptates cumque. Totam adipisci esse natus aliquam excepturi itaque saepe.",
+  //     messageDate: new Date(1650000000000),
+  //     sender: "you",
+  //   },
+  //   {
+  //     text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique exercitationem voluptates cumque. Totam adipisci esse natus aliquam excepturi itaque saepe.",
+  //     messageDate: new Date(1650000000000),
+  //     sender: "other",
+  //   },
+  //   {
+  //     text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique exercitationem voluptates cumque. Totam adipisci esse natus aliquam excepturi itaque saepe.",
+  //     messageDate: new Date(1650000000000),
+  //     sender: "other",
+  //   },
+  //   {
+  //     text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique exercitationem voluptates cumque. Totam adipisci esse natus aliquam excepturi itaque saepe.",
+  //     messageDate: new Date(1650000000000),
+  //     sender: "you",
+  //   },
+  //   {
+  //     text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique exercitationem voluptates cumque. Totam adipisci esse natus aliquam excepturi itaque saepe.",
+  //     messageDate: new Date(1650000000000),
+  //     sender: "other",
+  //   },
+  //   {
+  //     text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique exercitationem voluptates cumque. Totam adipisci esse natus aliquam excepturi itaque saepe.",
+  //     messageDate: new Date(1650000000000),
+  //     sender: "other",
+  //   },
+  // ];
 </script>
 
 <div class="flex">
