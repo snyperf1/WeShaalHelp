@@ -87,11 +87,11 @@
     Before signing up, please fill these in:
   </h3>
   <div class="flex flex-col gap-5">
-    <!-- <h3 class="mt-20 font-semibold text-xl text-white">
+    <h3 class="mt-20 font-semibold text-xl text-white">
       1. Are you a teacher or a student?
     </h3>
     <div class="flex font-medium place-content-center">
-      {#each options as content, index}
+      {#each ["Student", "Teacher"] as content, index}
         <McqBox
           {content}
           {index}
@@ -99,7 +99,7 @@
           bind:selected_option={selected}
         />
       {/each}
-    </div> -->
+    </div>
 
     {#if isStudent === true}
       <div class="flex justify-between text-xl items-center">
